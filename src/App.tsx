@@ -12,20 +12,18 @@ const queryCache = new QueryCache();
 
 function App() {
   return (
-    <>
-      <ReactQueryCacheProvider queryCache={queryCache}>
-        <Router>
-          <div className="app">
-            <Topbar />
-            <div className="wrapper">
-              <Navigation />
-              <Main />
-            </div>
+    <ReactQueryCacheProvider queryCache={queryCache}>
+      <Router>
+        <div className="app">
+          <Topbar />
+          <div className="wrapper">
+            <Navigation />
+            <Main />
           </div>
-        </Router>
-      </ReactQueryCacheProvider>
+        </div>
+      </Router>
       <ReactQueryDevtools initialIsOpen />
-    </>
+    </ReactQueryCacheProvider>
   );
 }
 
