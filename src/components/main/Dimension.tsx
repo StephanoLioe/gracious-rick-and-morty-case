@@ -1,4 +1,6 @@
 import React from "react";
+import { useQuery, useQueryCache } from "react-query";
+import { useCharacters } from "../../queries/useCharacters";
 
 const DimensionList = () => {
   return <div className="list">Lijst met dimensions</div>;

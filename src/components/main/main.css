@@ -16,9 +16,24 @@
 .list {
   width: 300px;
   background: white;
+  padding: 25px 20px;
 }
 
 .content {
   flex-grow: 1;
-  background: lightblue;
+  /* background: lightblue; */
+}
+
+.context-list {
+  display: block;
+  margin: 4px 0px;
+  text-decoration: none;
+  color: grey;
+}
+.context-list:hover {
+  color: red;
+}
+
+.context-active {
+  color: black;
 }

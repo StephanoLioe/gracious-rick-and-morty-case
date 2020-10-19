@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { Dimension } from "./Dimension";
+import { Episodes } from "./Episodes";
 import "./main.css";
 
 export const Main = () => {
@@ -15,8 +16,8 @@ export const Main = () => {
       <Route path="/locations">
         <div className="main locations">lijst locations</div>;
       </Route>
-      <Route path="/episodes">
-        <div className="main episodes">lijst content</div>;
+      <Route path="/episodes/">
+        <Episodes />;
       </Route>
     </Switch>
   );

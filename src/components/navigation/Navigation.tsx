@@ -27,7 +27,7 @@ const Nav: React.FC<INav> = ({ to, title, icon, color = "transparent" }) => {
 export const Navigation = () => {
   return (
     <div className="navigation">
-      <Nav
+      {/* <Nav
         to="/"
         title="All"
         icon="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
@@ -44,7 +44,7 @@ export const Navigation = () => {
         title="Locations"
         icon="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
         color="yellow"
-      />
+      /> */}
       <Nav
         to="/episodes"
         title="Episodes"
