@@ -1,17 +1,7 @@
-import { IncomingHttpHeaders } from "http";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { NavLink, useParams } from "react-router-dom";
-
-interface IEpisode {
-  id: number;
-  name: string;
-  air_date: string;
-  episode: string;
-  characters: string[];
-  url: string;
-  created: string;
-}
+import { CharacterItem } from "../character/CharacterItem";
 
 const getCharacterId = (character: string) => {
   const splittedArr = character.split("/");
@@ -25,13 +15,22 @@ const getCharacterIds = (characters: string[]) => {
   return characters.map(getCharacterId);
 };
 
-interface IEpisodeList {
+interface IEpisodeListProps {
   setCharacterIds: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedEpisode: React.Dispatch<React.SetStateAction<IEpisode | null>>;
+  selectedEpisode: IEpisode | null;
 }
 
-const EpisodesList: React.FC<IEpisodeList> = ({ setCharacterIds }) => {
-  const { data, status } = useQuery("episodes", () =>
-    fetch(`https://rickandmortyapi.com/api/episode`).then((res) => res.json())
+const EpisodeList: React.FC<IEpisodeListProps> = ({
+  setCharacterIds,
+  setSelectedEpisode,
+  selectedEpisode = null,
+}) => {
+  const [page, setPage] = useState(1);
+  const { data, status } = useQuery(["episodes", page], () =>
+    fetch(`https://rickandmortyapi.com/api/episode?page=${page}`).then((res) =>
+      res.json()
+    )
   );
 
   if (status === "loading") {
@@ -46,85 +45,89 @@ const EpisodesList: React.FC<IEpisodeList> = ({ setCharacterIds }) => {
     setCharacterIds(charIdsArr);
   };
 
+  const handleNextPage = () => {
+    setPage((page: number) => page + 1);
+  };
+  const handlePrevPage = () => {
+    setPage((page: number) => page - 1);
+  };
+
+  const hasNext = data.info.next ? true : false;
+  const hasPrev = data.info.prev ? true : false;
+
   return (
     <div className="list">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: 20,
+        }}
+      >
+        <button disabled={!hasPrev} onClick={handlePrevPage}>
+          {"<"}
+        </button>
+        <button disabled={!hasNext} onClick={handleNextPage}>
+          {">"}
+        </button>
+      </div>
       {data &&
         data.results &&
         data.results.map((episode: IEpisode) => (
-          <NavLink
-            className="context-list"
-            activeClassName="context-active"
-            to={`/episodes/${episode.id}/`}
+          <div
+            className={`context-list ${
+              episode.id === selectedEpisode?.id ? "active" : ""
+            }`}
             key={episode.id}
-            onClick={() => handleCharacterIds(episode.characters)}
+            onClick={() => {
+              handleCharacterIds(episode.characters);
+              setSelectedEpisode(episode);
+            }}
           >
-            <div>{episode.name}</div>
-          </NavLink>
+            {episode.name}
+          </div>
         ))}
     </div>
   );
 };
 
-interface ICharacterProps {
-  characterId: string;
-}
-
-interface ICharacter {
-  id: number;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  locatiion: {
-    name: string;
-    link: string;
-  };
-  image: string;
-  episode: string;
-  url: string;
-  created: string;
-}
-
-const CharacterListItem: React.FC<ICharacterProps> = ({ characterId }) => {
-  const { data, status }: { data: ICharacter; status: string } = useQuery(
-    ["character", characterId],
-    () =>
-      fetch(
-        `https://rickandmortyapi.com/api/character/${characterId}`
-      ).then((res) => res.json())
-  );
-
-  if (status === "loading") {
-    return <p>Loading...</p>;
-  }
-  if (status === "error") {
-    return <p>Error :(</p>;
-  }
-  return <div>{data.name}</div>;
-};
-
-interface IContent {
+interface IContentProps {
   characterIds: string[];
+  selectedCharacter: ICharacter | null;
+  setSelectedCharacter: React.Dispatch<React.SetStateAction<ICharacter | null>>;
 }
 
-const Content: React.FC<IContent> = ({ characterIds }) => {
-  return (
-    <div className="content">
-      {characterIds.length > 0 &&
-        characterIds.map((characterId: string) => (
-          <CharacterListItem key={characterId} characterId={characterId} />
-        ))}
-    </div>
-  );
-};
-
-export const Episodes = () => {
+export const Episodes: React.FC = () => {
   const [characterIds, setCharacterIds] = useState<string[]>([]);
+  const [selectedEpisode, setSelectedEpisode] = useState<IEpisode | null>(null);
+  const [selectedCharacter, setSelectedCharacter] = useState<ICharacter | null>(
+    null
+  );
+
+  const handleSetSeleced = (character: ICharacter) => {
+    setSelectedCharacter((prev) =>
+      prev?.id === character.id ? null : character
+    );
+  };
+
   return (
-    <div className="main dimension">
-      <EpisodesList setCharacterIds={setCharacterIds} />
-      <Content characterIds={characterIds} />
+    <div className="main episode">
+      <EpisodeList
+        setCharacterIds={setCharacterIds}
+        setSelectedEpisode={setSelectedEpisode}
+        selectedEpisode={selectedEpisode}
+      />
+      <div className="content">
+        {characterIds.length > 0 &&
+          characterIds.map((characterId: string) => (
+            <CharacterItem
+              key={characterId}
+              characterId={characterId}
+              selectedCharacter={selectedCharacter}
+              setSelectedCharacter={handleSetSeleced}
+            />
+          ))}
+      </div>
     </div>
   );
 };

@@ -29,6 +29,10 @@
   margin: 4px 0px;
   text-decoration: none;
   color: grey;
+  cursor: pointer;
+}
+.context-list.active {
+  color: black;
 }
 .context-list:hover {
   color: red;
