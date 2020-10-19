@@ -1,0 +1,26 @@
+.navigation {
+  display: flex;
+  flex-direction: column;
+  width: 80px;
+  height: 100%;
+  background: gray;
+}
+.nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 8px 0;
+  border-left-style: solid;
+  border-left-width: 4px;
+  box-sizing: border-box;
+}
+
+.nav.nav-active {
+  background-color: aqua;
+}
+
+.nav-img {
+  width: 80%;
+}

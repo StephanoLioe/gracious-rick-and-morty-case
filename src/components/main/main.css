@@ -1,0 +1,24 @@
+.main {
+  display: flex;
+  flex-grow: 1;
+}
+
+.episodes {
+  background: red;
+}
+.dimensions {
+  background: blue;
+}
+.locations {
+  background: orange;
+}
+
+.list {
+  width: 300px;
+  background: white;
+}
+
+.content {
+  flex-grow: 1;
+  background: lightblue;
+}

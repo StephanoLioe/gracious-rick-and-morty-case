@@ -1,2 +1,14 @@
-.App {
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: pink;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  background: yellow;
 }
