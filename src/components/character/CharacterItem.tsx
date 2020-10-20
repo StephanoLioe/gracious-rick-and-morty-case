@@ -65,6 +65,7 @@ const CharacterContent = ({ character }: { character: ICharacter }) => {
       {location && <div>Location: {location.name}</div>}
       {origin && <div>Origin: {origin.name}</div>}
       <div>Species: {character.species}</div>
+      <div>Status: {character.status}</div>
     </div>
   );
 };

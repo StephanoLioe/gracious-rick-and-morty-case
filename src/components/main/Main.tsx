@@ -7,15 +7,12 @@ import "./main.css";
 export const Main = () => {
   return (
     <Switch>
-      <Route exact path="/">
-        <div className="main">lijst home</div>;
-      </Route>
       <Route path="/dimensions">
         <Dimension />
       </Route>
-      <Route path="/locations">
-        <div className="main locations">lijst locations</div>;
-      </Route>
+      {/* <Route path="/locations">
+        <Location />
+      </Route> */}
       <Route path="/episodes/">
         <Episodes />;
       </Route>

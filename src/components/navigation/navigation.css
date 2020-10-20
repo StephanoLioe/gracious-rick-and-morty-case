@@ -1,9 +1,9 @@
 .navigation {
   display: flex;
   flex-direction: column;
-  width: 80px;
+  width: 100px;
   height: 100%;
-  background: gray;
+  background: darkgray;
 }
 .nav {
   display: flex;
@@ -18,7 +18,7 @@
 }
 
 .nav.nav-active {
-  background-color: aqua;
+  background-color: white;
 }
 
 .nav-img {

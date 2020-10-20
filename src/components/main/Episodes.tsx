@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import { NavLink, useParams } from "react-router-dom";
 import { CharacterItem } from "../character/CharacterItem";
 
 const getCharacterId = (character: string) => {
@@ -90,12 +89,6 @@ const EpisodeList: React.FC<IEpisodeListProps> = ({
     </div>
   );
 };
-
-interface IContentProps {
-  characterIds: string[];
-  selectedCharacter: ICharacter | null;
-  setSelectedCharacter: React.Dispatch<React.SetStateAction<ICharacter | null>>;
-}
 
 export const Episodes: React.FC = () => {
   const [characterIds, setCharacterIds] = useState<string[]>([]);
